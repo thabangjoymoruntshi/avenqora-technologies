@@ -7,7 +7,7 @@ export default function Founder() {
           <div className="flex justify-center lg:justify-start">
             <div className="overflow-hidden rounded-2xl border border-gray-200 shadow-sm">
               <img
-                src="/images/founder.jpg"
+                src="/images/Founder.jpg"
                 alt="Thabang Joy Moruntshi, Founder and CEO of Avenqora Technologies"
                 className="h-auto w-full max-w-md object-cover"
               />

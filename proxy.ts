@@ -1,6 +1,9 @@
-import { withAuth } from "next-auth/middleware";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
-export const proxy = withAuth();
+export function proxy(request: NextRequest) {
+  return NextResponse.next();
+}
 
 export const config = {
   matcher: ["/admin/:path*"],

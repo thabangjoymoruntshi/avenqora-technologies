@@ -8,7 +8,7 @@ export default function Founder() {
             <div className="overflow-hidden rounded-2xl border border-gray-200 shadow-sm">
               <img
                 src="/images/Founder.jpg"
-                alt="Thabang Joy Moruntshi, Founder and CEO of Avenqora Technologies"
+                alt="Thabang Moruntshi, Founder and CEO of Avenqora Technologies"
                 className="h-auto w-full max-w-md object-cover"
               />
             </div>
@@ -24,7 +24,7 @@ export default function Founder() {
             </h2>
 
             <h3 className="mt-6 text-2xl font-semibold text-gray-900">
-              Thabang Joy Moruntshi
+              Thabang Moruntshi
             </h3>
 
             <p className="mt-2 text-lg font-medium text-gray-600">
@@ -32,7 +32,7 @@ export default function Founder() {
             </p>
 
             <p className="mt-6 text-lg leading-8 text-gray-600">
-              Thabang Joy Moruntshi is the Founder and CEO of Avenqora
+              Thabang Moruntshi is the Founder and CEO of Avenqora
               Technologies, focused on building practical digital experiences,
               software solutions, and IT services that help businesses solve
               real problems through technology.
@@ -46,7 +46,7 @@ export default function Founder() {
 
             <div className="mt-8">
               <a
-                href="#contact"
+                href="/#contact"
                 className="inline-flex items-center rounded-lg bg-gray-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-gray-800"
               >
                 Start a Project →
@@ -57,5 +57,6 @@ export default function Founder() {
         </div>
       </div>
     </section>
+
   );
 }

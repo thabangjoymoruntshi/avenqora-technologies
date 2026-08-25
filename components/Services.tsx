@@ -2,6 +2,7 @@ const services = [
   {
     number: "01",
     title: "Digital Experiences",
+    project: "website",
     description:
       "Modern, responsive websites and front-end applications designed to create strong digital experiences.",
     tags: ["Web Design", "React", "Next.js"],
@@ -9,6 +10,7 @@ const services = [
   {
     number: "02",
     title: "Software Solutions",
+    project: "software",
     description:
       "Custom web applications and business systems built around real-world workflows and business needs.",
     tags: ["Web Apps", "Full-Stack", "Custom Systems"],
@@ -16,6 +18,7 @@ const services = [
   {
     number: "03",
     title: "Backend & Data",
+    project: "backend",
     description:
       "Reliable APIs, databases, authentication, and server-side systems that power modern applications.",
     tags: ["APIs", "PostgreSQL", "Prisma"],
@@ -23,6 +26,7 @@ const services = [
   {
     number: "04",
     title: "IT & Technical Solutions",
+    project: "it",
     description:
       "Practical technology support and technical solutions that help businesses operate more effectively.",
     tags: ["IT Support", "Troubleshooting", "Systems"],
@@ -66,9 +70,13 @@ export default function Services() {
                   {service.number}
                 </span>
 
-                <span className="text-slate-600 transition group-hover:text-cyan-400">
+                <a
+                 href={`/?project=${service.project}#contact`}
+                 aria-label={`Start a project for ${service.title}`}
+                 className="text-slate-600 transition group-hover:text-cyan-400"
+                 >
                   →
-                </span>
+                </a>
               </div>
 
               <h3 className="text-2xl font-bold text-white">

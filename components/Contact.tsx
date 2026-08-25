@@ -1,10 +1,26 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState("");
+  const [project, setProject] = useState("");
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const selectedProject = params.get("project");
+
+    if (
+      selectedProject === "website" ||
+      selectedProject === "software" ||
+      selectedProject === "backend" ||
+      selectedProject === "it" ||
+      selectedProject === "other"
+    ) {
+      setProject(selectedProject);
+    }
+  }, []);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -40,6 +56,7 @@ export default function Contact() {
 
       setStatus(result.message);
       form.reset();
+      setProject("");
     } catch {
       setStatus("Something went wrong. Please try again.");
     } finally {
@@ -152,7 +169,8 @@ export default function Contact() {
               <select
                 id="project"
                 name="project"
-                defaultValue=""
+                value={project}
+                onChange={(event) => setProject(event.target.value)}
                 required
                 className="w-full rounded-xl border border-white/10 bg-slate-950 px-4 py-3 text-sm text-slate-300 outline-none transition focus:border-cyan-400/50"
               >

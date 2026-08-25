@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const solutions = [
   {
     number: "01",
@@ -85,12 +87,14 @@ export default function Solutions() {
 
                 <div className="mt-8 h-px w-full bg-white/10" />
 
-                <div className="mt-5 flex items-center text-sm font-semibold text-cyan-400">
+                <Link
+                 href="/discover"
+                className="mt-5 flex items-center text-sm font-semibold text-cyan-400">
                   Discover what's possible
                   <span className="ml-2 transition-transform duration-300 group-hover:translate-x-1">
                     →
                   </span>
-                </div>
+                </Link>
               </div>
             </article>
           ))}

@@ -7,7 +7,7 @@ export default function Hero() {
       <div className="absolute inset-0 -z-0 bg-[radial-gradient(circle_at_center,rgba(34,211,238,0.06)_0,transparent_45%)]" />
 
       <div className="relative z-10 mx-auto w-full max-w-7xl">
-        <div className="mx-auto max-w-4x1 text-center">
+        <div className="mx-auto max-w-4xl text-center">
           {/* Eyebrow */}
           <div className="mb-7 inline-flex items-center gap-3 rounded-full border border-cyan-400/20 bg-cyan-400/5 px-4 py-2">
             <span className="h-2 w-2 rounded-full bg-cyan-400" />

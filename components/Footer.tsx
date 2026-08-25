@@ -74,7 +74,7 @@ export default function Footer() {
 
         {/* Bottom */}
         <div className="mt-14 flex flex-col gap-4 border-t border-white/10 pt-6 text-sm text-slate-600 sm:flex-row sm:items-center sm:justify-between">
-          <p>© 2026 Avenqora Technologies. All rights reserved.</p>
+          <p>© 2024 Avenqora Technologies. All rights reserved.</p>
 
           <p>Technology That Moves Business Forward.</p>
         </div>

@@ -3,6 +3,7 @@ const projects = [
     number: "01",
     category: "Business Platform",
     title: "Avenqora Business Suite",
+    href: "/projects/business-suite",
     description:
       "A modern business management platform concept designed to bring everyday operations, data, and workflows into one digital environment.",
     technologies: ["Next.js", "TypeScript", "PostgreSQL"],
@@ -11,6 +12,7 @@ const projects = [
     number: "02",
     category: "Property Technology",
     title: "Property Rental Platform",
+    href: "/projects/property-rental",
     description:
       "A full-stack property rental application concept connecting property listings, users, and rental workflows through a modern digital experience.",
     technologies: ["React", "Node.js", "Prisma"],
@@ -19,6 +21,7 @@ const projects = [
     number: "03",
     category: "IT & Support",
     title: "IT Support Portal",
+    href: "/projects/it-support",
     description:
       "A technology support platform concept designed to help businesses organize support requests, technical issues, and service communication.",
     technologies: ["Next.js", "TypeScript", "API"],
@@ -58,7 +61,8 @@ export default function Projects() {
         {/* Project cards */}
         <div className="mt-16 grid gap-6 lg:grid-cols-3">
           {projects.map((project) => (
-            <article
+            <a
+              href={project.href}
               key={project.number}
               className="group flex min-h-[430px] flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] transition duration-300 hover:-translate-y-1 hover:border-cyan-400/30"
             >
@@ -95,7 +99,7 @@ export default function Projects() {
                   ))}
                 </div>
               </div>
-            </article>
+            </a>
           ))}
         </div>
 

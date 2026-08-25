@@ -4,11 +4,11 @@ import { useState } from "react";
 
 const navLinks = [
   { name: "Home", href: "/" },
-  { name: "Services", href: "#services" },
-  { name: "Solutions", href: "#solutions" },
-  { name: "Projects", href: "#projects" },
-  { name: "About", href: "#about" },
-  { name: "Contact", href: "#contact" },
+  { name: "Services", href: "/#services" },
+  { name: "Solutions", href: "/#solutions" },
+  { name: "Projects", href: "/#projects" },
+  { name: "About", href: "/#about" },
+  { name: "Contact", href: "/#contact" },
 ];
 
 export default function Header() {
@@ -43,7 +43,7 @@ export default function Header() {
 
         {/* Desktop CTA */}
         <a
-          href="#contact"
+          href="/#contact"
           className="hidden rounded-full bg-cyan-400 px-5 py-2.5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 lg:block"
         >
           Start a Project
@@ -77,7 +77,7 @@ export default function Header() {
             ))}
 
             <a
-              href="#contact"
+              href="/#contact"
               onClick={() => setMenuOpen(false)}
               className="mt-2 rounded-lg bg-cyan-400 px-4 py-3 text-center text-sm font-bold text-slate-950 transition hover:bg-cyan-300"
             >

@@ -52,6 +52,9 @@ const possibilities = [
 export default function DiscoverPage() {
   return (
     <main className="min-h-screen bg-slate-950 text-white">
+
+      
+      
       {/* Hero */}
       <section className="relative overflow-hidden px-6 py-24 sm:py-32 lg:px-8">
         {/* Background glow */}

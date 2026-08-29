@@ -54,7 +54,7 @@ export default function Projects() {
           </div>
 
           <span className="text-sm font-medium text-slate-500">
-            Portfolio / 2026
+            Portfolio / 2024
           </span>
         </div>
 

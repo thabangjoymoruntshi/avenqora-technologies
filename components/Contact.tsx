@@ -11,13 +11,7 @@ export default function Contact() {
     const params = new URLSearchParams(window.location.search);
     const selectedProject = params.get("project");
 
-    if (
-      selectedProject === "website" ||
-      selectedProject === "software" ||
-      selectedProject === "backend" ||
-      selectedProject === "it" ||
-      selectedProject === "other"
-    ) {
+    if (selectedProject) {
       setProject(selectedProject);
     }
   }, []);
@@ -50,7 +44,7 @@ export default function Contact() {
       const result = await response.json();
 
       if (!response.ok) {
-        setStatus(result.message || "Please complete all fields.");
+        setStatus(result.error || "Please complete all fields.");
         return;
       }
 

@@ -13,6 +13,6 @@ model Inquiry {
   email     String
   project   String
   message   String
-  status    String @default("NEW")
+  status    String   @default("NEW")
   createdAt DateTime @default(now())
 }

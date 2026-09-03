@@ -87,6 +87,10 @@ export async function PATCH(request: Request) {
     return NextResponse.json(inquiry);
   } catch (error) {
     console.error("Inquiry update error:", error);
+    console.error(
+       "Inquiry fetch error message:",
+       error instanceof Error ? error.message : String(error)
+    );
 
     return NextResponse.json(
       { error: "Something went wrong while updating the inquiry." },

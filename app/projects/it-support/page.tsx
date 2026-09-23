@@ -486,7 +486,7 @@ export default function ITSupportProject() {
 
             <div className="rounded-xl bg-green-500 px-6 py-3 text-sm font-semibold text-zinc-950 transition hover:bg-zinc-200">
                <a
-              href="https://it-support-portal-avenqora-technologies.vercel.app/"
+              href="https://it-support-portal-avenqora.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
             >

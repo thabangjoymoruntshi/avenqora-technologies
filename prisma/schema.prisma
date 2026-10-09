@@ -8,11 +8,23 @@ datasource db {
 }
 
 model Inquiry {
-  id        String   @id @default(cuid())
-  name      String
-  email     String
-  project   String
-  message   String
-  status    String   @default("NEW")
-  createdAt DateTime @default(now())
+  id          String   @id @default(cuid())
+  name        String
+  email       String
+  project     String
+  message     String
+  status      String   @default("NEW")
+  createdAt   DateTime @default(now())
+  salesStatus String   @default("NEW")
+}
+
+model Proposal {
+  id          String   @id @default(cuid())
+  inquiryId   String
+  title       String
+  description String
+  amount      Float
+  status      String   @default("DRAFT")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

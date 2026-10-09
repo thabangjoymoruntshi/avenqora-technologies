@@ -1,0 +1,36 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="green" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#19d3a2"></stop>
+      <stop offset="100%" stop-color="#0aa77d"></stop>
+    </linearGradient>
+
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffbf24"></stop>
+      <stop offset="100%" stop-color="#f59e0b"></stop>
+    </linearGradient>
+  </defs>
+
+  <!-- Main A -->
+  <path d="M256 55
+       L95 385
+       L170 385
+       L256 225
+       L342 385
+       L417 385
+       Z" fill="url(#green)"></path>
+
+  <!-- Inner cut -->
+  <path d="M256 145
+       L218 215
+       L294 215
+       Z" fill="#07110e"></path>
+
+  <!-- Gold sweep -->
+  <path d="M145 330
+       C205 300 267 257 345 210
+       C368 196 389 190 412 194
+       C382 176 351 173 320 186
+       C254 214 195 262 145 330
+       Z" fill="url(#gold)"></path>
+</svg>

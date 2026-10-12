@@ -420,6 +420,55 @@ export default function ITSupportProject() {
         </div>
       </section>
 
+            {/* Business Value */}
+      <section className="border-b border-zinc-800 bg-zinc-950 py-20">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="max-w-3xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.25em] text-green-400">
+              Business Value
+            </p>
+
+            <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">
+              A clearer way to manage technical support.
+            </h2>
+
+            <p className="mt-6 leading-7 text-zinc-400">
+              The portal demonstrates how a structured support workflow could
+              help businesses organize technical requests, track progress,
+              and give support teams a clearer view of outstanding issues.
+            </p>
+          </div>
+
+          <div className="mt-10 grid gap-5 md:grid-cols-3">
+            <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-7">
+              <h3 className="text-lg font-semibold">Clearer Priorities</h3>
+              <p className="mt-3 text-sm leading-7 text-zinc-400">
+                Organize requests by priority and status to make support work
+                easier to review.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-7">
+              <h3 className="text-lg font-semibold">Request Visibility</h3>
+              <p className="mt-3 text-sm leading-7 text-zinc-400">
+                Give users and support teams a shared view of ticket progress
+                and outstanding issues.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-7">
+              <h3 className="text-lg font-semibold">Structured Support</h3>
+              <p className="mt-3 text-sm leading-7 text-zinc-400">
+                Use a defined ticket lifecycle to bring consistency to
+                technical support processes.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+
       {/* Technology */}
       <section className="border-b border-zinc-800 bg-zinc-950 py-20">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">

@@ -6,6 +6,9 @@ import Projects from "@/components/Projects";
 import About from "@/components/About";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import Process from "@/components/Process";
+import FAQ from "@/components/FAQ";
+import Trust from "@/components/Trust";
 
 
 
@@ -19,7 +22,10 @@ export default function Home() {
        <Services />
        <Solutions />
        <Projects />
+       <Process />
        <About />
+       <Trust />
+       <FAQ />
        <Contact />
       </main>
       <Footer />

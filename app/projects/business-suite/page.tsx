@@ -55,10 +55,10 @@ export default function BusinessSuitePage() {
             </h2>
 
             <p className="mt-6 leading-8 text-slate-400">
-              Many businesses rely on multiple tools to manage customers,
-              information, tasks, and everyday operations. The Avenqora
-              Business Suite explores how these workflows can be brought
-              together through a single modern digital platform.
+              Many businesses rely on separate tools to manage customers, tasks, records, and
+              daily operations. This concept explores how a centralized business platform could 
+              bring these activities into one organized environment, helping teams improve 
+              visibility, reduce fragmented workflows, and access important information more efficiently.
             </p>
 
             <p className="mt-5 leading-8 text-slate-400">
@@ -138,6 +138,96 @@ export default function BusinessSuitePage() {
           </div>
         </div>
       </section>
+
+            {/* Problem & Solution */}
+      <section className="px-6 py-24 lg:px-8">
+        <div className="mx-auto grid max-w-5xl gap-12 md:grid-cols-2">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.25em] text-cyan-400">
+              The Challenge
+            </p>
+
+            <h2 className="mt-4 text-3xl font-bold">
+              Disconnected tools can slow business operations.
+            </h2>
+
+            <p className="mt-5 leading-8 text-slate-400">
+              When business information and everyday tasks are spread across
+              different tools, it can become harder to maintain visibility,
+              organize workflows, and make informed decisions.
+            </p>
+          </div>
+
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.25em] text-cyan-400">
+              The Approach
+            </p>
+
+            <h2 className="mt-4 text-3xl font-bold">
+              One platform, designed around your workflow.
+            </h2>
+
+            <p className="mt-5 leading-8 text-slate-400">
+              Avenqora Business Suite explores a unified digital environment
+              for business information, operational workflows, and important
+              activity, with a flexible foundation that can adapt as a
+              business grows.
+            </p>
+          </div>
+        </div>
+      </section>
+
+            {/* Business Value */}
+      <section className="border-y border-white/10 bg-slate-900/30 px-6 py-24 lg:px-8">
+        <div className="mx-auto max-w-5xl">
+          <p className="text-sm font-semibold uppercase tracking-[0.25em] text-cyan-400">
+            Business Value
+          </p>
+
+          <h2 className="mt-4 max-w-3xl text-3xl font-bold">
+            A clearer view of everyday operations.
+          </h2>
+
+          <p className="mt-6 max-w-3xl leading-8 text-slate-400">
+            The concept is designed to explore how a unified platform could
+            help businesses organize information, understand daily activity,
+            and build more consistent workflows as their needs evolve.
+          </p>
+
+          <div className="mt-10 grid gap-5 md:grid-cols-3">
+            {[
+              {
+                title: "Better Visibility",
+                description:
+                  "Bring important business information into a more organized environment.",
+              },
+              {
+                title: "Structured Workflows",
+                description:
+                  "Explore clearer ways to organize recurring tasks and business processes.",
+              },
+              {
+                title: "Room to Grow",
+                description:
+                  "Plan a flexible foundation that can adapt to changing business requirements.",
+              },
+            ].map((value) => (
+              <div
+                key={value.title}
+                className="rounded-2xl border border-white/10 bg-slate-950/60 p-6"
+              >
+                <h3 className="text-lg font-bold">{value.title}</h3>
+
+                <p className="mt-3 leading-7 text-slate-400">
+                  {value.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+
 
       {/* Technology */}
       <section className="px-6 py-24 lg:px-8">

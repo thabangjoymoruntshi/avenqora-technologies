@@ -1,4 +1,4 @@
-const projects = [
+﻿const projects = [
   {
     number: "01",
     category: "Business Platform",
@@ -9,7 +9,7 @@ const projects = [
     technologies: ["Next.js", "TypeScript", "PostgreSQL"],
   },
   {
-    
+
   number: "02",
   category: "Property Technology",
   title: "Property Rental Platform",
@@ -28,6 +28,29 @@ const projects = [
       "A technology support platform concept designed to help businesses organize support requests, technical issues, and service communication.",
     technologies: ["Next.js", "TypeScript", "API"],
     image: "/images/IT%20Support%20Portal.png"
+  },
+
+    {
+    number: "04",
+    category: "Plumbing & Drilling",
+    title: "City Plumber & Drilling Contractor",
+    href: "/projects/city-plumber",
+    description:
+      "A professional plumbing and drilling business website showcasing services, project photography, business information, and customer enquiry options.",
+        technologies: ["Web Development", "Responsive Design", "Business Website"],
+    image: "/images/City%20Plumber.png",
+  },
+
+
+   {
+    number: "05",
+    category: "Business Website",
+    title: "Floman Plumbing",
+    href: "/projects/floman",
+    description:
+      "A professional plumbing business website designed to showcase services, present business information, and make it easier for customers to get in touch.",
+        technologies: ["Next.js", "Responsive Design", "Web Development"],
+    image: "/images/Floman%20Plumbing%20.png",
   },
 ];
 
@@ -57,7 +80,7 @@ export default function Projects() {
           </div>
 
           <span className="text-sm font-medium text-slate-500">
-            Portfolio 
+            Portfolio
           </span>
         </div>
 

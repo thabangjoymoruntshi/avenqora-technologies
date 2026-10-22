@@ -16,6 +16,7 @@ model Inquiry {
   status      String   @default("NEW")
   createdAt   DateTime @default(now())
   salesStatus String   @default("NEW")
+   automationTasks AutomationTask[]
 }
 
 model Proposal {
@@ -27,4 +28,42 @@ model Proposal {
   status      String   @default("DRAFT")
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model Staff {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         String   @default("EMPLOYEE")
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  actorId    String?
+  actorEmail String
+  action     String
+  targetType String?
+  targetId   String?
+  details    Json?
+  createdAt  DateTime @default(now())
+}
+
+model AutomationTask {
+  id        String   @id @default(cuid())
+  inquiryId String
+  ruleKey   String
+  status    String   @default("OPEN")
+  reason    String
+  dueAt     DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  inquiry Inquiry @relation(fields: [inquiryId], references: [id], onDelete: Cascade)
+
+  @@unique([inquiryId, ruleKey])
+  @@index([status, dueAt])
 }

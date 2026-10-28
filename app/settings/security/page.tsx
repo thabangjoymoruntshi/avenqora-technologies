@@ -11,6 +11,79 @@ export default function SecurityPage() {
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  
+  const [twoFactorLoading, setTwoFactorLoading] = useState(false);
+  const [qrCode, setQrCode] = useState("");
+  const [authenticatorSecret, setAuthenticatorSecret] = useState("");
+  const [authenticatorCode, setAuthenticatorCode] = useState("");
+  const [recoveryCodes, setRecoveryCodes] = useState<string[]>([]);
+  const [twoFactorMessage, setTwoFactorMessage] = useState("");
+  const [twoFactorError, setTwoFactorError] = useState("");
+
+
+  async function startAuthenticatorSetup() {
+    setTwoFactorLoading(true);
+    setTwoFactorMessage("");
+    setTwoFactorError("");
+    setRecoveryCodes([]);
+
+    try {
+      const response = await fetch("/api/account/two-factor/enroll", {
+        method: "POST",
+      });
+      const data = await response.json();
+
+      if (!response.ok) {
+        setTwoFactorError(data.error ?? "Unable to start setup.");
+        return;
+      }
+
+      setQrCode(data.qrCodeDataUrl);
+      setAuthenticatorSecret(data.secret);
+      setTwoFactorMessage(
+        "Scan the QR code with your authenticator app, then enter its six-digit code.",
+      );
+    } catch {
+      setTwoFactorError("Unable to start setup. Please try again.");
+    } finally {
+      setTwoFactorLoading(false);
+    }
+  }
+
+  async function verifyAuthenticatorSetup(
+    event: React.FormEvent<HTMLFormElement>,
+  ) {
+    event.preventDefault();
+    setTwoFactorLoading(true);
+    setTwoFactorMessage("");
+    setTwoFactorError("");
+
+    try {
+      const response = await fetch("/api/account/two-factor/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code: authenticatorCode }),
+      });
+      const data = await response.json();
+
+      if (!response.ok) {
+        setTwoFactorError(data.error ?? "Verification failed.");
+        return;
+      }
+
+      setRecoveryCodes(data.recoveryCodes ?? []);
+      setQrCode("");
+      setAuthenticatorSecret("");
+      setAuthenticatorCode("");
+      setTwoFactorMessage(
+        "Authenticator verification enabled. Save your recovery codes securely.",
+      );
+    } catch {
+      setTwoFactorError("Unable to verify the code. Please try again.");
+    } finally {
+      setTwoFactorLoading(false);
+    }
+  }
 
   async function changePassword(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -75,6 +148,138 @@ export default function SecurityPage() {
         <p className="mt-2 text-slate-400">
           Protect your Avenqora account by updating your password.
         </p>
+
+        
+        <section className="mt-8 space-y-5 rounded-2xl border border-white/10 bg-white/[0.03] p-6">
+          <div>
+            <h2 className="text-xl font-semibold">
+              Two-step verification
+            </h2>
+            <p className="mt-2 text-sm text-slate-400">
+              Use an authenticator app to add another layer of protection to
+              your Avenqora account.
+            </p>
+          </div>
+
+          {!qrCode && recoveryCodes.length === 0 && (
+            <button
+              type="button"
+              onClick={startAuthenticatorSetup}
+              disabled={twoFactorLoading}
+              className="rounded-xl bg-cyan-400 px-5 py-3 font-semibold text-slate-950 transition hover:bg-cyan-300 disabled:opacity-50"
+            >
+              {twoFactorLoading
+                ? "Starting setup..."
+                : "Set up authenticator"}
+            </button>
+          )}
+
+          {qrCode && (
+            <div className="space-y-4">
+              <p className="text-sm text-slate-300">
+                1. Open Google Authenticator or Microsoft Authenticator and
+                scan this QR code.
+              </p>
+
+              <img
+                src={qrCode}
+                alt="Authenticator setup QR code"
+                className="w-56 rounded-xl bg-white p-3"
+              />
+
+              <div>
+                <p className="mb-2 text-sm text-slate-300">
+                  If you cannot scan the QR code, enter this setup key manually:
+                </p>
+                <code className="block break-all rounded-xl bg-slate-900 p-3 text-sm text-cyan-300">
+                  {authenticatorSecret}
+                </code>
+              </div>
+
+              <form onSubmit={verifyAuthenticatorSetup} className="space-y-4">
+                <label
+                  htmlFor="authenticatorCode"
+                  className="block text-sm text-slate-300"
+                >
+                  2. Enter the six-digit code from your authenticator app
+                </label>
+
+                <input
+                  id="authenticatorCode"
+                  type="text"
+                  inputMode="numeric"
+                  autoComplete="one-time-code"
+                  pattern="[0-9]{6}"
+                  maxLength={6}
+                  value={authenticatorCode}
+                  onChange={(event) =>
+                    setAuthenticatorCode(
+                      event.target.value.replace(/\D/g, "").slice(0, 6),
+                    )
+                  }
+                  required
+                  className="w-full rounded-xl border border-white/10 bg-slate-900 px-4 py-3 tracking-[0.3em] outline-none focus:border-cyan-400"
+                  placeholder="000000"
+                />
+
+                <button
+                  type="submit"
+                  disabled={twoFactorLoading || authenticatorCode.length !== 6}
+                  className="rounded-xl bg-cyan-400 px-5 py-3 font-semibold text-slate-950 transition hover:bg-cyan-300 disabled:opacity-50"
+                >
+                  {twoFactorLoading ? "Verifying..." : "Verify and enable"}
+                </button>
+              </form>
+            </div>
+          )}
+
+          {twoFactorMessage && (
+            <p role="status" className="text-sm text-emerald-400">
+              {twoFactorMessage}
+            </p>
+          )}
+
+          {twoFactorError && (
+            <p role="alert" className="text-sm text-red-400">
+              {twoFactorError}
+            </p>
+          )}
+
+          {recoveryCodes.length > 0 && (
+            <div className="space-y-3 rounded-xl border border-amber-400/30 bg-amber-400/5 p-4">
+              <h3 className="font-semibold text-amber-300">
+                Save your recovery codes
+              </h3>
+              <p className="text-sm text-slate-300">
+                Each code can be used once if you lose access to your
+                authenticator. Store them somewhere secure. They will not be
+                shown again after leaving this page.
+              </p>
+
+              <ul className="grid grid-cols-2 gap-2 font-mono text-sm">
+                {recoveryCodes.map((code) => (
+                  <li
+                    key={code}
+                    className="rounded-lg bg-slate-900 p-2 text-center"
+                  >
+                    {code}
+                  </li>
+                ))}
+              </ul>
+
+              <button
+                type="button"
+                onClick={() =>
+                  navigator.clipboard.writeText(recoveryCodes.join("\n"))
+                }
+                className="rounded-xl border border-white/15 px-4 py-2 text-sm hover:bg-white/5"
+              >
+                Copy recovery codes
+              </button>
+            </div>
+          )}
+        </section>
+
 
         <form
           onSubmit={changePassword}

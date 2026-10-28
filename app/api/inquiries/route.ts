@@ -1,20 +1,15 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
 import { prisma } from "@/app/lib/prisma";
-import { authOptions } from "@/auth";
-
+import { requireRole } from "@/app/lib/permissions";
 export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
-    const session = await getServerSession(authOptions);
+    const access = await requireRole(["CEO", "ADMIN", "EMPLOYEE"]);
 
-    if (!session) {
-      return NextResponse.json(
-        { error: "Unauthorized" },
-        { status: 401 }
-      );
-    }
+if (access.response) {
+  return access.response;
+}
     const inquiries = await prisma.inquiry.findMany({
       select: {
         id: true,
@@ -48,14 +43,11 @@ export async function GET() {
 
 export async function PATCH(request: Request) {
   try {
-    const session = await getServerSession(authOptions);
-    
-    if (!session) {
-      return NextResponse.json(
-        { error: "Unauthorized" },
-        { status: 401 }
-      );
-    }
+    const access = await requireRole(["CEO", "ADMIN"]);
+
+if (access.response) {
+  return access.response;
+}
     const body = await request.json();
 
     const { id, status, salesStatus } = body;
@@ -120,6 +112,7 @@ if (salesStatus) {
 
 return NextResponse.json(
   { error: "Status or sales status is required." },
+
   { status: 400 }
 );
 
@@ -140,14 +133,11 @@ return NextResponse.json(
 
 export async function DELETE(request: Request) {
   try {
-    const session = await getServerSession(authOptions);
+    const access = await requireRole(["CEO"]);
 
-    if (!session) {
-      return NextResponse.json(
-        { error: "Unauthorized" },
-        { status: 401 }
-      );
-    }
+if (access.response) {
+  return access.response;
+}
 
     const body = await request.json();
     const { id } = body;

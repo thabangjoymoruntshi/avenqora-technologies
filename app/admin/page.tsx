@@ -30,6 +30,7 @@ export default function AdminPage() {
   const [proposals, setProposals] = useState<Proposal[]>([]);
   const [loading, setLoading] = useState(true);
   const [checkingAuth, setCheckingAuth] = useState(true);
+  const [userRole, setUserRole] = useState("");
   const [updatingId, setUpdatingId] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("ALL");
@@ -66,6 +67,9 @@ export default function AdminPage() {
     async function loadAdminData() {
       try {
         const session = await getSession();
+        setUserRole(
+  (session?.user as { role?: string } | undefined)?.role ?? ""
+);
 
         if (!session) {
           window.location.href = "/login";
@@ -307,12 +311,29 @@ try {
             Manage project inquiries submitted through your website.
           </p>
 
-          <button
-            onClick={() => signOut({ callbackUrl: "/login" })}
-            className="mt-6 rounded-lg border border-white/10 bg-white/[0.03] px-5 py-2.5 text-sm font-semibold text-slate-300 transition hover:border-cyan-400 hover:text-cyan-400"
-          >
-            Sign Out
-          </button>
+    
+<div className="mt-6 flex flex-wrap items-center gap-3">
+  <a
+    href="/settings/profile"
+    className="rounded-lg border border-white/10 bg-white/[0.03] px-5 py-2.5 text-sm font-semibold text-slate-300 transition hover:border-cyan-400 hover:text-cyan-400"
+  >
+    Profile
+  </a>
+
+  <a
+    href="/settings/security"
+    className="rounded-lg border border-white/10 bg-white/[0.03] px-5 py-2.5 text-sm font-semibold text-slate-300 transition hover:border-cyan-400 hover:text-cyan-400"
+  >
+    Security
+  </a>
+
+  <button
+    onClick={() => signOut({ callbackUrl: "/login" })}
+    className="rounded-lg border border-white/10 bg-white/[0.03] px-5 py-2.5 text-sm font-semibold text-slate-300 transition hover:border-cyan-400 hover:text-cyan-400"
+  >
+    Sign Out
+  </button>
+</div>
         </div>
 
         <div className="mb-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -399,6 +420,7 @@ try {
                       </p>
                     </div>
 
+                    {userRole !=="EMPLOYEE" && (
                     <div className="mt-2">
                       <label
                         htmlFor={`status-${inquiry.id}`}
@@ -452,6 +474,7 @@ try {
                       </select>
                     </div>
                     </div>
+                    )}
 
                     <p className="text-sm text-slate-500">
                       {new Date(inquiry.createdAt).toLocaleString()}
@@ -463,6 +486,8 @@ try {
                   </p>
 
                   <div className="mt-5">
+                   
+                  {userRole !== "EMPLOYEE" && (
                     <button
                       type="button"
                       onClick={() => deleteInquiry(inquiry.id)}
@@ -470,6 +495,8 @@ try {
                     >
                       Delete Inquiry
                     </button>
+                  )}
+
 
                     <button
                       type="button"
@@ -483,16 +510,18 @@ try {
                       Contact Customer
                     </button>
 
+                    {userRole !== "EMPLOYEE" && (
                     <button
                       type="button"
                       onClick={() => {
-  alert("Create Proposal button clicked");
-  setProposalInquiry(inquiry);
-}}
-                      className="ml-3 rounded-lg border border-cyan-500/20 bg-cyan-500/10 px-4 py-2 text-sm font-semibold text-cyan-400 transition hover:border-cyan-400 hover:bg-cyan-500/20"
+                      alert("Create Proposal button clicked");
+                      setProposalInquiry(inquiry);
+                    }}
+                          className="ml-3 rounded-lg border border-cyan-500/20 bg-cyan-500/10 px-4 py-2 text-sm font-semibold text-cyan-400 transition hover:border-cyan-400 hover:bg-cyan-500/20"
                     >
                       Create Proposal
                     </button>
+                    )}
                   </div>
                 </article>
               ))}

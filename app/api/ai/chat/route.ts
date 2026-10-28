@@ -12,19 +12,81 @@ type ChatMessage = {
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
+    const contentLength = Number(request.headers.get("content-length") ?? 0);
 
-    const message = body.message;
-    const history: ChatMessage[] = Array.isArray(body.history)
-      ? body.history
-      : [];
+if (contentLength > 100_000) {
+  return NextResponse.json(
+    { error: "Request is too large." },
+    { status: 413 }
+  );
+}
 
-    if (!message || typeof message !== "string") {
-      return NextResponse.json(
-        { error: "A message is required." },
-        { status: 400 }
-      );
-    }
+const body = await request.json();
+
+if (!body || typeof body !== "object" || Array.isArray(body)) {
+  return NextResponse.json(
+    { error: "Invalid request body." },
+    { status: 400 }
+  );
+}
+
+const message = body.message;
+
+if (typeof message !== "string" || !message.trim()) {
+  return NextResponse.json(
+    { error: "A message is required." },
+    { status: 400 }
+  );
+}
+
+if (message.length > 4_000) {
+  return NextResponse.json(
+    { error: "Your message is too long. Please keep it under 4,000 characters." },
+    { status: 400 }
+  );
+}
+
+if (body.history !== undefined && !Array.isArray(body.history)) {
+  return NextResponse.json(
+    { error: "Invalid conversation history." },
+    { status: 400 }
+  );
+}
+
+const rawHistory: unknown[] = Array.isArray(body.history)
+  ? body.history
+  : [];
+
+if (rawHistory.length > 20) {
+  return NextResponse.json(
+    { error: "This conversation is too long. Please start a new chat." },
+    { status: 400 }
+  );
+}
+
+const history: ChatMessage[] = [];
+
+for (const item of rawHistory) {
+  if (
+    !item ||
+    typeof item !== "object" ||
+    !("role" in item) ||
+    !("content" in item) ||
+    (item.role !== "user" && item.role !== "assistant") ||
+    typeof item.content !== "string" ||
+    item.content.length > 4_000
+  ) {
+    return NextResponse.json(
+      { error: "Invalid conversation history." },
+      { status: 400 }
+    );
+  }
+
+  history.push({
+    role: item.role,
+    content: item.content,
+  });
+}
 
     const conversation = [
       ...history.map((item) => ({

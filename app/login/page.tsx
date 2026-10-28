@@ -11,6 +11,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [authenticatorCode, setAuthenticatorCode] = useState("");
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -19,13 +20,14 @@ export default function LoginPage() {
     setLoading(true);
 
     const result = await signIn("credentials", {
-      email,
-      password,
-      redirect: false,
-    });
+  email,
+  password,
+  authenticatorCode,
+  redirect: false,
+});
 
     if (result?.error) {
-      setError("Invalid email or password.");
+      setError("Invalid email, password, or authenticator/recovery code.");
       setLoading(false);
       return;
     }
@@ -93,6 +95,29 @@ export default function LoginPage() {
                 placeholder="Enter your password"
               />
             </div>
+
+            <div>
+  <label
+    htmlFor="authenticatorCode"
+    className="mb-2 block text-sm font-medium text-slate-300"
+  >
+    Authenticator or Recovery Code
+  </label>
+
+  <input
+    id="authenticatorCode"
+    type="text"
+    autoComplete="one-time-code"
+    value={authenticatorCode}
+    onChange={(event) => setAuthenticatorCode(event.target.value)}
+    className="w-full rounded-lg border border-white/10 bg-slate-900 px-4 py-3 text-white outline-none placeholder:text-slate-500 focus:border-cyan-400"
+    placeholder="Enter code if two-step verification is enabled"
+  />
+
+  <p className="mt-2 text-xs text-slate-400">
+    Only required if two-step verification is enabled on your account.
+  </p>
+</div>
 
             {error && (
               <p className="rounded-lg border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-400">

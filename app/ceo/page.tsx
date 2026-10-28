@@ -16,12 +16,28 @@ export default async function CEOPage() {
     redirect("/login");
   }
 
-  const role = (
-    session.user as typeof session.user & { role?: string }
-  ).role;
+    const account = session.user as typeof session.user & {
+    id?: string;
+    role?: string;
+    mfaVerified?: boolean;
+  };
 
-  if (role !== "CEO") {
+  if (account.role !== "CEO") {
     redirect("/admin");
+  }
+
+  if (account.id && account.id !== "admin") {
+    const staffAccount = await prisma.staff.findUnique({
+      where: { id: account.id },
+      select: { twoFactorEnabled: true },
+    });
+
+    if (
+      staffAccount?.twoFactorEnabled &&
+      account.mfaVerified !== true
+    ) {
+      redirect("/login?error=two-factor-required");
+    }
   }
 
   const [inquiries, proposals, staff, activeStaff, recentLogs] =

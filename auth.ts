@@ -5,6 +5,54 @@ import type { JWT } from "next-auth/jwt";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/app/lib/prisma";
 
+import {
+  decryptTotpSecret,
+  hashRecoveryCode,
+  verifyTotpCode,
+} from "@/app/lib/two-factor";
+
+
+async function consumeRecoveryCode(
+  staffId: string,
+  code: string,
+): Promise<boolean> {
+  const candidateHash = hashRecoveryCode(code);
+
+  try {
+    return await prisma.$transaction(
+      async (tx) => {
+        const account = await tx.staff.findUnique({
+          where: { id: staffId },
+          select: { recoveryCodeHashes: true },
+        });
+
+        const stored = account?.recoveryCodeHashes;
+
+        if (!Array.isArray(stored)) return false;
+
+        const hashes = stored.filter(
+          (value): value is string => typeof value === "string",
+        );
+
+        const index = hashes.indexOf(candidateHash);
+
+        if (index === -1) return false;
+
+        hashes.splice(index, 1);
+
+        await tx.staff.update({
+          where: { id: staffId },
+          data: { recoveryCodeHashes: hashes },
+        });
+
+        return true;
+      },
+      { isolationLevel: "Serializable" },
+    );
+  } catch {
+    return false;
+  }
+}
 
 export const authOptions = {
   providers: [
@@ -20,6 +68,10 @@ export const authOptions = {
           label: "Password",
           type: "password",
         },
+        authenticatorCode: {
+  label: "Authenticator or recovery code",
+  type: "text",
+},
       },
 
 
@@ -51,14 +103,42 @@ async authorize(credentials) {
       staff.passwordHash
     );
 
-    if (!passwordIsValid) return null;
+   
+if (!passwordIsValid) return null;
 
-    return {
-      id: staff.id,
-      name: staff.name,
-      email: staff.email,
-      role: staff.role,
-    };
+let mfaVerified = false;
+
+if (staff.twoFactorEnabled) {
+  const code = credentials?.authenticatorCode;
+
+  if (typeof code !== "string" || !code.trim()) {
+    return null;
+  }
+
+  let validCode = false;
+
+  if (staff.twoFactorSecret) {
+    const secret = decryptTotpSecret(staff.twoFactorSecret);
+    validCode = verifyTotpCode(secret, code);
+  }
+
+  if (!validCode) {
+    validCode = await consumeRecoveryCode(staff.id, code);
+  }
+
+  if (!validCode) return null;
+
+  mfaVerified = true;
+}
+
+return {
+  id: staff.id,
+  name: staff.name,
+  email: staff.email,
+  role: staff.role,
+  mfaVerified,
+};
+
   }
 
   // Keep environment-based CEO login as a fallback
@@ -94,37 +174,44 @@ callbacks: {
   }) {
     if (user) {
       const account = user as User & {
-        role?: string;
-      };
+  role?: string;
+  mfaVerified?: boolean;
+};
 
       token.sub = account.id;
       (token as JWT & { role?: string }).role =
         account.role ?? "EMPLOYEE";
+        (token as JWT & { mfaVerified?: boolean }).mfaVerified =
+  account.mfaVerified ?? false;
     }
 
     return token;
   },
 
   async session({
-    session,
-    token,
-  }: {
-    session: import("next-auth").Session;
-    token: JWT;
-  }) {
-    if (session.user) {
-      const account = session.user as typeof session.user & {
-        id?: string;
-        role?: string;
-      };
+  session,
+  token,
+}: {
+  session: import("next-auth").Session;
+  token: JWT;
+}) {
+  if (session.user) {
+    const account = session.user as typeof session.user & {
+      id?: string;
+      role?: string;
+      mfaVerified?: boolean;
+    };
 
-      account.id = token.sub;
-      account.role =
-        (token as JWT & { role?: string }).role ?? "EMPLOYEE";
-    }
+    account.id = token.sub;
+    account.role =
+      (token as JWT & { role?: string }).role ?? "EMPLOYEE";
 
-    return session;
-  },
+    account.mfaVerified =
+      (token as JWT & { mfaVerified?: boolean }).mfaVerified ?? false;
+  }
+
+  return session;
+},
 },
 
 

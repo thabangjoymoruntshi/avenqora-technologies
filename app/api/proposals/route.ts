@@ -1,20 +1,16 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
 import { prisma } from "@/app/lib/prisma";
-import { authOptions } from "@/auth";
+import { requireRole } from "@/app/lib/permissions";
 
 export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
   try {
-    const session = await getServerSession(authOptions);
+    const access = await requireRole(["CEO", "ADMIN"]);
 
-    if (!session) {
-      return NextResponse.json(
-        { error: "Unauthorized" },
-        { status: 401 }
-      );
-    }
+if (access.response) {
+  return access.response;
+}
 
     const body = await request.json();
 
@@ -57,14 +53,10 @@ export async function POST(request: Request) {
 
 export async function GET() {
 try {
-const session = await getServerSession(authOptions);
+const access = await requireRole(["CEO", "ADMIN"]);
 
-
-if (!session) {
-  return NextResponse.json(
-    { error: "Unauthorized" },
-    { status: 401 }
-  );
+if (access.response) {
+  return access.response;
 }
 
 const proposals = await prisma.proposal.findMany({

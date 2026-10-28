@@ -1,22 +1,26 @@
+import { NextResponse } from "next/server";
+import { requireRole } from "@/app/lib/permissions";
 import { prisma } from "@/app/lib/prisma";
 
 export async function GET() {
-  try {
-    const inquiries = await prisma.inquiry.findMany();
+  const access = await requireRole(["CEO"]);
 
-    return Response.json({
+  if (access.response) {
+    return access.response;
+  }
+
+  try {
+    await prisma.$queryRaw`SELECT 1`;
+
+    return NextResponse.json({
       success: true,
-      count: inquiries.length,
-      inquiries,
+      message: "Database connection successful.",
     });
   } catch (error) {
-    console.error(error);
+    console.error("Database diagnostic failed:", error);
 
-    return Response.json(
-      {
-        success: false,
-        error: "Database connection failed",
-      },
+    return NextResponse.json(
+      { success: false, error: "Database connection failed." },
       { status: 500 }
     );
   }

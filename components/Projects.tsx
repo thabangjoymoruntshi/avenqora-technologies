@@ -1,4 +1,5 @@
-﻿const projects = [
+﻿
+const projects = [
   {
     number: "01",
     category: "Business Platform",
@@ -9,50 +10,57 @@
     technologies: ["Next.js", "TypeScript", "PostgreSQL"],
   },
   {
-
-  number: "02",
-  category: "Property Technology",
-  title: "Property Rental Platform",
-  href: "/projects/property-rental",
-  description:
-    "A full-stack property rental application concept connecting property listings, users, and rental workflows through a modern digital experience.",
-  technologies: ["React", "Node.js", "Prisma"],
-  image: "/images/Rentora%20Properties.png",
-},
+    number: "02",
+    category: "Property Technology",
+    title: "Property Rental Platform",
+    href: "/projects/property-rental",
+    description:
+      "A full-stack property rental application concept connecting property listings, users, and rental workflows through a modern digital experience.",
+    technologies: ["React", "Node.js", "Prisma"],
+    image: "/images/Rentora%20Properties.png",
+  },
   {
     number: "03",
-    category: "IT & Support",
-    title: "IT Support Portal",
-    href: "/projects/it-support",
+    category: "Automotive Marketplace",
+    title: "You Must",
+    href: "/projects/you-must",
     description:
-      "A technology support platform concept designed to help businesses organize support requests, technical issues, and service communication.",
-    technologies: ["Next.js", "TypeScript", "API"],
-    image: "/images/IT%20Support%20Portal.png"
+      "An automotive marketplace concept showcasing vehicles through a modern digital experience designed for browsing vehicle listings.",
+    technologies: ["Next.js", "TypeScript", "Responsive Design"],
+    image: "/images/You%20Must%201.png",
   },
-
-    {
+  {
     number: "04",
     category: "Plumbing & Drilling",
     title: "City Plumber & Drilling Contractor",
     href: "/projects/city-plumber",
     description:
       "A professional plumbing and drilling business website showcasing services, project photography, business information, and customer enquiry options.",
-        technologies: ["Web Development", "Responsive Design", "Business Website"],
+    technologies: ["Web Development", "Responsive Design", "Business Website"],
     image: "/images/City%20Plumber.png",
   },
-
-
-   {
+  {
     number: "05",
     category: "Business Website",
     title: "Floman Plumbing",
     href: "/projects/floman",
     description:
       "A professional plumbing business website designed to showcase services, present business information, and make it easier for customers to get in touch.",
-        technologies: ["Next.js", "Responsive Design", "Web Development"],
+    technologies: ["Next.js", "Responsive Design", "Web Development"],
     image: "/images/Floman%20Plumbing%20.png",
   },
+  {
+    number: "06",
+    category: "Plumbing Services",
+    title: "A & C Plumbing Vaal Triangle",
+    href: "/projects/ac-plumbing",
+    description:
+      "A professional plumbing business website highlighting its Best of Vaal Readers’ Choice 2026 recognition, plumbing services, and customer contact options.",
+    technologies: ["Next.js", "Responsive Design", "Business Website"],
+    image: "/images/AC%20Plumbing.png",
+  },
 ];
+
 
 export default function Projects() {
   return (

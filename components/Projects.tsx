@@ -29,8 +29,19 @@ const projects = [
     technologies: ["Next.js", "TypeScript", "Responsive Design"],
     image: "/images/You%20Must%201.png",
   },
-  {
+
+    {
     number: "04",
+    category: "Tea Garden & Venue",
+    title: "Wilgerwerf Tea Garden",
+    href: "/projects/wilgerwerf",
+    description:
+      "An elegant tea garden and events website showcasing venue hire, celebrations, dining experiences, and booking information through a warm botanical design.",
+    technologies: ["Next.js", "Responsive Design", "Business Website"],
+    image: "/images/Wilderwerf.png",
+  },
+  {
+    number: "05",
     category: "Plumbing & Drilling",
     title: "City Plumber & Drilling Contractor",
     href: "/projects/city-plumber",
@@ -40,7 +51,7 @@ const projects = [
     image: "/images/City%20Plumber.png",
   },
   {
-    number: "05",
+    number: "06",
     category: "Business Website",
     title: "Floman Plumbing",
     href: "/projects/floman",
@@ -50,7 +61,7 @@ const projects = [
     image: "/images/Floman%20Plumbing%20.png",
   },
   {
-    number: "06",
+    number: "07",
     category: "Plumbing Services",
     title: "A & C Plumbing Vaal Triangle",
     href: "/projects/ac-plumbing",

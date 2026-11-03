@@ -70,6 +70,21 @@ const projects = [
     technologies: ["Next.js", "Responsive Design", "Business Website"],
     image: "/images/AC%20Plumbing.png",
   },
+    {
+    number: "08",
+    category: "Automotive Business Website",
+    title: "Jake's Auto Electrical",
+    href: "/projects/jakes-auto-electrical",
+    description:
+      "A professional website showcasing auto electrical diagnostics, repairs, vehicle tracking and automotive security services.",
+    technologies: [
+      "Next.js",
+      "Responsive Design",
+      "Business Website",
+      "Web Development",
+    ],
+    image: "/images/jakes-auto-electrical/jakes-logo.png",
+  },
 ];
 
 

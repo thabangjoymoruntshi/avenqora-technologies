@@ -1,6 +1,7 @@
-"use client";
+﻿"use client";
 
 import { FormEvent, useState } from "react";
+import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
@@ -95,6 +96,8 @@ export default function LoginPage() {
                 placeholder="Enter your password"
               />
             </div>
+
+            <div className="text-right"><Link href="/forgot-password" className="text-sm text-cyan-400 hover:text-cyan-300">Forgot password? Reset it here</Link></div>
 
             <div>
   <label

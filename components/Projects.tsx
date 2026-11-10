@@ -85,6 +85,27 @@ const projects = [
     ],
     image: "/images/jakes-auto-electrical/jakes-logo.png",
   },
+    {
+    number: "09",
+    category: "Hardware & Building Supplies",
+    title: "Amans Hardware",
+    href: "/projects/amans-hardware",
+    description:
+      "A responsive retail website for a local hardware and building supplies store, showcasing product categories, flooring, timber, a product gallery, store information, and direct WhatsApp enquiries.",
+    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Responsive Design"],
+    image: "/images/Amans.png",
+  },
+
+    {
+    number: "10",
+    category: "Property Services & Maintenance",
+    title: "Property Upreed",
+    href: "/projects/property-upreed",
+    description:
+      "A professional business website presenting borehole solutions, well rehabilitation, plumbing, irrigation, pump systems, drain jetting, and general maintenance services.",
+    technologies: ["Next.js", "Responsive Design", "Business Website"],
+    image: "/images/Property%20Upreed.png",
+  },
 ];
 
 
